@@ -15,7 +15,11 @@ public class CourseSchedule {
 
     /**
      * MIND MAP:
-     * Build graph → Compute indegree → Push zero indegree nodes → BFS topological sort → Count processed nodes
+     *  * Build adjacency list → Compute indegree array
+     *  → Push zero indegree nodes into queue
+     *  → BFS process (pop → reduce neighbors indegree)
+     *  → Push newly zero indegree nodes
+     *  → Count processed nodes → Compare with total courses
      *
      * Time Complexity: O(V + E)
      * Space Complexity: O(V + E)
