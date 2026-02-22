@@ -1,8 +1,10 @@
-package trees;
+package tries;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import tries.PrefixTree;
 
 /**
  * Unit tests for PrefixTree (Trie).
