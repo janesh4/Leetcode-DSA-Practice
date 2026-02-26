@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 /**
  * LeetCode Problem: Top K Frequent Elements
@@ -64,5 +65,67 @@ public class TopKFrequentElements {
         }
 
         return result;
+    }
+
+
+
+    /**
+     * Returns k most frequent elements using a Min Heap.
+     *
+     * 🧠 Mindmap to Solve:
+     *
+     * 1️⃣ Count frequency using HashMap
+     *      num → frequency
+     *
+     * 2️⃣ Use Min Heap of size k
+     *      Store: [frequency, number]
+     *
+     * 3️⃣ Iterate over map entries:
+     *      - Push into heap
+     *      - If heap size > k → remove smallest frequency
+     *
+     * 4️⃣ Heap now contains top k frequent elements
+     *
+     * 5️⃣ Extract elements from heap into result array
+     *
+     * Why Min Heap?
+     * - Keeps smallest frequency at top
+     * - Removes unnecessary elements
+     * - Maintains only k largest frequencies
+     *
+     * @param nums input array
+     * @param k number of top frequent elements
+     * @return array of k most frequent elements
+     */
+    public int[] topKFrequentHeap(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        // Min Heap based on frequency
+        PriorityQueue<int[]> minHeap =
+                new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
+
+        // Step 1: Count frequencies
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+
+        // Step 2: Maintain heap of size k
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+
+            minHeap.offer(new int[]{entry.getValue(), entry.getKey()});
+
+            if (minHeap.size() > k) {
+                minHeap.poll();  // remove smallest frequency
+            }
+        }
+
+        // Step 3: Extract result
+        int[] res = new int[k];
+        for (int i = 0; i < k; i++) {
+            res[i] = minHeap.poll()[1];
+        }
+
+        return res;
     }
 }
